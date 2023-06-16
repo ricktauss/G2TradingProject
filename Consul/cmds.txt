@@ -1,0 +1,5 @@
+Start consul:
+	consul agent -dev -enable-script-checks -config-dir=./config
+
+Open UI:
+	http://localhost:8500/ui

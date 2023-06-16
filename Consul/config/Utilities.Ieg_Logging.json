@@ -1,0 +1,10 @@
+{
+    "service": {
+        "name": "utilities.ieg/Logging",
+        "tags": [
+            "Logging",
+            "Utilities"
+        ],
+        "port": 80
+    }
+}

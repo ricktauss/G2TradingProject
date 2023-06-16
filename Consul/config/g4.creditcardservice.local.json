@@ -1,0 +1,42 @@
+{
+    "services": [
+        {
+            "id": "service1",
+            "name": "g4.creditcardservice.local",
+            "Address": "https://localhost",
+            "port": 5020,
+            "tags": [
+                "CreditCard",
+                "Transaction"
+            ],
+            "check": [
+                {
+                    "id": "HealthCheck CreditCardService1",
+                    "name": "HTTP API on port 5025",
+                    "http": "http://localhost:5025/api/HealthCheck",
+                    "interval": "10s",
+                    "timeout": "5s"
+                }
+            ]
+        },
+        {
+            "id": "service2",
+            "name": "g4.creditcardservice.local",
+            "Address": "https://localhost",
+            "port": 5021,
+            "tags": [
+                "CreditCard",
+                "Transaction"
+            ],
+            "check": [
+                {
+                    "id": "HealthCheck CreditCardService2",
+                    "name": "HTTP API on port 5026",
+                    "http": "http://localhost:5026/api/HealthCheck",
+                    "interval": "10s",
+                    "timeout": "5s"
+                }
+            ]
+        }
+    ]
+}
