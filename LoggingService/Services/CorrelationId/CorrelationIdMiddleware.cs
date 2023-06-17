@@ -5,7 +5,7 @@ namespace LoggerService.Services.CorrelationId
     public class CorrelationIdMiddleware
     {
         private readonly RequestDelegate _next;
-        private const string _correlationIdHeader = "X-Correlation-Id";
+        private const string _correlationIdHeader = "X-Correlation-ID";
 
         public CorrelationIdMiddleware(RequestDelegate next) => _next = next;
 
