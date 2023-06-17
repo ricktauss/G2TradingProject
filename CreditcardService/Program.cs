@@ -1,4 +1,7 @@
 
+using CorrelationId;
+using CorrelationId.DependencyInjection;
+using CorrelationId.HttpClient;
 using IEGEasyCreditcardService.Services;
 
 namespace IEGEasyCreditcardService
@@ -12,8 +15,10 @@ namespace IEGEasyCreditcardService
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDefaultCorrelationId();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient("Default").AddCorrelationIdForwarding();
 
             builder.Services.AddScoped<ICreditcardValidator, CreditcardValidator>();
             builder.Services.AddSingleton<LoadBalancerService>();
@@ -32,6 +37,7 @@ namespace IEGEasyCreditcardService
 
             app.UseAuthorization();
 
+            app.UseCorrelationId();
 
             app.MapControllers();
 
