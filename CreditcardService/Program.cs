@@ -1,5 +1,6 @@
 
 using IEGEasyCreditcardService.Services;
+using System.Reflection;
 
 namespace IEGEasyCreditcardService
 {
@@ -13,7 +14,11 @@ namespace IEGEasyCreditcardService
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             builder.Services.AddScoped<ICreditcardValidator, CreditcardValidator>();
             builder.Services.AddSingleton<LoadBalancerService>();
@@ -22,7 +27,7 @@ namespace IEGEasyCreditcardService
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-           // if (app.Environment.IsDevelopment())
+           if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
