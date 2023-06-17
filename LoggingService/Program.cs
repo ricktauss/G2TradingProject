@@ -1,5 +1,6 @@
 
 using LoggerService.Services;
+using LoggerService.Services.CorrelationId;
 using Microsoft.Extensions.Options;
 using System.Reflection;
 
@@ -15,6 +16,7 @@ namespace LoggerService
             builder.Services.AddSingleton<ILoggingService, LoggingService>();
 
             builder.Services.AddControllers();
+            builder.Services.AddScoped<ICorrelationIdGenerator, CorrelationIdGenerator>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -43,6 +45,7 @@ namespace LoggerService
 
             app.UseAuthorization();
 
+            app.AddCorrelationIdMiddleware();
 
             app.MapControllers();
 

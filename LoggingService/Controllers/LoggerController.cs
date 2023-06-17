@@ -1,4 +1,5 @@
 ﻿using LoggerService.Services;
+using LoggerService.Services.CorrelationId;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels.Models;
 
@@ -9,10 +10,12 @@ namespace LoggerService.Controllers
     public class LoggerController : ControllerBase
     {
         private ILoggingService _loggingService;
+        private readonly ICorrelationIdGenerator _correlationIdGenerator;
 
-        public LoggerController(ILoggingService loggingService)
+        public LoggerController(ILoggingService loggingService, ICorrelationIdGenerator correlationIdGenerator)
         {
             _loggingService = loggingService;
+            _correlationIdGenerator = correlationIdGenerator; 
         }
 
 
@@ -37,7 +40,7 @@ namespace LoggerService.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> PostMessage([FromBody] LogMessage message)
         {           
-            string reply = await _loggingService.Log(message);
+            string reply = await _loggingService.Log(message, _correlationIdGenerator.Get());
 
             if (string.IsNullOrEmpty(reply))
             {
