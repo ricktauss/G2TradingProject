@@ -1,4 +1,4 @@
-﻿using SharedModels.Models;
+﻿using LoggerService.Models;
 
 namespace LoggerService.Services
 {

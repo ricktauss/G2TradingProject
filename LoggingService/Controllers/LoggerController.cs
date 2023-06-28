@@ -1,7 +1,8 @@
-﻿using LoggerService.Services;
+
 using LoggerService.Services.CorrelationId;
+using LoggerService.Models;
+using LoggerService.Services;
 using Microsoft.AspNetCore.Mvc;
-using SharedModels.Models;
 
 namespace LoggerService.Controllers
 {
