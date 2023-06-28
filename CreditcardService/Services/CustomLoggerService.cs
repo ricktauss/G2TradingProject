@@ -1,4 +1,5 @@
-﻿using SharedModels.Models;
+﻿
+using CreditcardService.Models;
 using System.Net.Http.Headers;
 
 namespace IEGEasyCreditcardService.Services

@@ -1,6 +1,6 @@
-﻿using LoggerService.Services;
+﻿using LoggerService.Models;
+using LoggerService.Services;
 using Microsoft.AspNetCore.Mvc;
-using SharedModels.Models;
 
 namespace LoggerService.Controllers
 {

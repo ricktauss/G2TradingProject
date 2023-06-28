@@ -1,9 +1,11 @@
 
-using LoggerService.Services;
-using Microsoft.Extensions.Options;
+using ConsulServiceDiscovery.Services;
+using CorrelationId;
+using CorrelationId.DependencyInjection;
+using CorrelationId.HttpClient;
 using System.Reflection;
 
-namespace LoggerService
+namespace ConsulServiceDiscovery
 {
     public class Program
     {
@@ -12,23 +14,18 @@ namespace LoggerService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddSingleton<ILoggingService, LoggingService>();
-
             builder.Services.AddControllers();
+            builder.Services.AddDefaultCorrelationId();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
-            builder.WebHost.ConfigureKestrel(serverOptions =>
-            {
-                serverOptions.ConfigureEndpointDefaults(listenOptions =>
-                {
-                    // ...
-                });
-            });
+            builder.Services.AddHttpClient("Default").AddCorrelationIdForwarding();
+            builder.Services.AddUrlCacheService();
+            builder.Services.AddSingleton<IUrlSelectionStrategy, RoundRobinUrlSelectionStrategy>();
+            builder.Services.AddSingleton<IUrlProvider, UrlProvider>();
 
             var app = builder.Build();
 
@@ -43,6 +40,7 @@ namespace LoggerService
 
             app.UseAuthorization();
 
+            app.UseCorrelationId();
 
             app.MapControllers();
 
