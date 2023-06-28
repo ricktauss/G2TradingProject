@@ -15,13 +15,20 @@ namespace BlackFriday.Controllers
 
         private readonly ILogger<CashDeskController> _logger;
         private readonly ICustomLogger _customLogger;
+        private readonly IHttpClientFactory _httpClientFactory;
+
         private static string creditcardServiceBaseAddress = "http://iegeasycreditcardservice.azurewebsites.net/";
+
         private LoadBalancerService _loadBalancerService;
 
-        public CashDeskController(ILogger<CashDeskController> logger, ICustomLogger customLogger, LoadBalancerService loadBalancerService)
+        public CashDeskController(ILogger<CashDeskController> logger,
+            ICustomLogger customLogger,
+            IHttpClientFactory httpClientFactory,
+            LoadBalancerService loadBalancerService)
         {
             _logger = logger;
             _customLogger = customLogger;
+            _httpClientFactory = httpClientFactory;
             _loadBalancerService = loadBalancerService;
         }
 
@@ -67,11 +74,12 @@ namespace BlackFriday.Controllers
                     HttpResponseMessage response = client.PostAsJsonAsync(creditcardServiceBaseAddress + "api/CreditcardTransactions", creditCardTransaction).Result;
                     response.EnsureSuccessStatusCode();
 
-                } catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     _customLogger.LogError(ex.Message);
                     throw;
-                } 
+                }
             });
 
             return CreatedAtAction("Get", new { id = System.Guid.NewGuid() }, creditCardTransaction);
@@ -145,7 +153,7 @@ namespace BlackFriday.Controllers
 
         private HttpClient GetHttpClient()
         {
-            HttpClient client = new HttpClient();
+            HttpClient client = _httpClientFactory.CreateClient("Default");
             creditcardServiceBaseAddress = GetCreditCardTransactionsURIFromConsul().AbsoluteUri;
             client.BaseAddress = new Uri(creditcardServiceBaseAddress);
             client.DefaultRequestHeaders.Accept.Clear();

@@ -1,4 +1,7 @@
 
+using CorrelationId;
+using CorrelationId.DependencyInjection;
+using CorrelationId.HttpClient;
 using IEGEasyCreditcardService.Services;
 using System.Reflection;
 
@@ -13,7 +16,9 @@ namespace IEGEasyCreditcardService
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDefaultCorrelationId();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHttpClient("Default").AddCorrelationIdForwarding();
             builder.Services.AddSwaggerGen(options =>
             {
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -37,6 +42,7 @@ namespace IEGEasyCreditcardService
 
             app.UseAuthorization();
 
+            app.UseCorrelationId();
 
             app.MapControllers();
 
