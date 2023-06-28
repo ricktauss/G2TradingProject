@@ -1,4 +1,4 @@
-﻿using SharedModels.Models;
+﻿using LoggerService.Models;
 
 namespace LoggerService.Services
 {
@@ -14,6 +14,11 @@ namespace LoggerService.Services
             _logger = logger;
         }
 
+        public Task<string> Log(LogMessage logMessage)
+        {
+            return Log(logMessage, null);
+        }
+
         /// <summary>
         /// Log message and replies with boolean value 
         /// </summary>
@@ -22,7 +27,7 @@ namespace LoggerService.Services
         /// Tuple with boolean value indicating if logging was successfull and string with information if failed
         /// T1: false => logging failed  T2: true => logging successfull
         /// </returns>
-        public Task<string> Log(LogMessage logMessage)
+        public Task<string> Log(LogMessage logMessage, string correlationId)
         {
             return Task.Run( () =>
             {
@@ -32,28 +37,23 @@ namespace LoggerService.Services
                     {
                         return "No logger service available";
                     }
-                    else if (string.IsNullOrEmpty(logMessage.TimestampUtc))
-                    {
-                        return "Timestamp is missing in request";
-                    }
                     else if (string.IsNullOrEmpty(logMessage.Message))
                     {
                         return "Message is missing in request";
-                    }
-                    else if (logMessage.LogLevel < _minLogLevel || logMessage.LogLevel > _maxLogLevel)
-                    {
-                        return $"Log level must be between {_minLogLevel} and {_maxLogLevel}";
                     }
 
                     DateTime timestamp;
                     bool isValidDateTime = DateTime.TryParse(logMessage.TimestampUtc, out timestamp);
 
-                    if (!isValidDateTime)
-                    {
-                        return "Timestamp format not valid";
-                    }
+                    string logEntry = "";
 
-                    string logEntry = $"{timestamp} - {logMessage.Message}";
+                    if (isValidDateTime)
+                        logEntry += $"{timestamp}";
+
+                    if (!string.IsNullOrWhiteSpace(correlationId))
+                        logEntry += $" - CorrID: {correlationId}";
+
+                    logEntry += $" - {logMessage.Message}";
 
                     switch (logMessage.LogLevel)
                     {
@@ -70,7 +70,8 @@ namespace LoggerService.Services
                             break;
 
                         default:
-                            return "Log level not valid";
+                            _logger.LogDebug(logEntry);
+                            break;
                     }
 
                     return "";

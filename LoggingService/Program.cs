@@ -1,5 +1,7 @@
 
 using LoggerService.Services;
+using LoggerService.Services.CorrelationId;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 using NLog;
 using NLog.Web;
@@ -54,8 +56,9 @@ namespace LoggerService
 
                 app.UseAuthorization();
 
-
                 app.MapControllers();
+
+                app.AddCorrelationIdMiddleware();
 
                 app.Run();
             }
