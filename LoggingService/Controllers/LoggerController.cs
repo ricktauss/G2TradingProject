@@ -1,4 +1,3 @@
-
 using LoggerService.Services.CorrelationId;
 using LoggerService.Models;
 using LoggerService.Services;
