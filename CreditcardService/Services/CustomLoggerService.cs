@@ -6,17 +6,17 @@ namespace IEGEasyCreditcardService.Services
 {
     public class CustomLoggerService : ICustomLogger
     {
-        HttpClient _httpClient;
         private readonly ILogger<CustomLoggerService> _logger;
+        private readonly HttpClient _httpClient;
 
         private readonly string _customLggerUri = "https://localhost:5011/";
 
-        
-        public CustomLoggerService(ILogger<CustomLoggerService> logger)
+
+        public CustomLoggerService(ILogger<CustomLoggerService> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
 
-            _httpClient = new HttpClient();
+            _httpClient = httpClientFactory.CreateClient("Default");
             _httpClient.BaseAddress = new Uri(_customLggerUri);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -38,7 +38,7 @@ namespace IEGEasyCreditcardService.Services
             Send(message, 3);
         }
 
-       
+
         private void Send(string message, int logLevel)
         {
             LogMessage logMessage = CreateNewLogMessage(message, logLevel);
@@ -47,7 +47,8 @@ namespace IEGEasyCreditcardService.Services
             {
                 HttpResponseMessage response = _httpClient.PostAsJsonAsync(_customLggerUri + "api/Logger", logMessage).Result;
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError("Log to central logging service failed: " + ex);
             }
