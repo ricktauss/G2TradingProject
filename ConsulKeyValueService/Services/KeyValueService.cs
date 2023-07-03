@@ -69,12 +69,12 @@ namespace ConsulKeyValueService.Services
 
             var putAttempt = await _consulClient.KV.Put(putPair);
 
-            if (putAttempt.Response)
+            if (!putAttempt.Response)
             {
                     return new ServiceResult<string>
                     {
                         Success = false,
-                        ErrorMessage = "Failed to add Key Value Par to Consul!"
+                        ErrorMessage = "Failed to add Key Value Pair to Consul!"
                     };
              }
 
