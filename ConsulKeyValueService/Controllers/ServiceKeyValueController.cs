@@ -26,7 +26,7 @@ namespace ConsulKeyValueService.Controllers
             ServiceResult<string> serviceResult = await _keyValueService.GetKeyValue(key);
 
             if (serviceResult.Success)
-                return Ok(serviceResult);
+                return Ok(serviceResult.Data);
             return BadRequest(serviceResult.ErrorMessage);
         }
 
