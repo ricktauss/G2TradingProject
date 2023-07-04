@@ -24,10 +24,10 @@ namespace OData
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-            
+
             app.MapControllers();
-            
-            
+
+
             // Start a new thread for the OData client code
             // Client code 
             /*await Task.Run(async () =>
@@ -45,10 +45,10 @@ namespace OData
                     Console.WriteLine($"Product: {product.Name}, Price: {product.Price}");
                 }
             });*/
-            
-            
+
+
             // https://localhost:5108/Products?$filter=Price%20gt%2020
-            
+
             // Run server
             await app.RunAsync();
         }
