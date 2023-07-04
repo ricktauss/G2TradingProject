@@ -1,4 +1,4 @@
-﻿namespace IEGEasyCreditcardService.Services
+﻿namespace CreditcardService.Services
 {
     public interface ICustomLogger
     {

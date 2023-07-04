@@ -1,4 +1,4 @@
-﻿namespace IEGEasyCreditcardService.Models
+﻿namespace CreditcardService.Models
 {
     public class Basket
     {

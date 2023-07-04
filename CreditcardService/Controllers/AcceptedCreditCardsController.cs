@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IEGEasyCreditcardService.Controllers
+namespace CreditcardService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
