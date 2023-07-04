@@ -12,3 +12,6 @@ start "" cmd /k dotnet "%base_path%ConsulServiceDiscovery.dll" --urls="%CREDITCA
 REM ###Starten von CreditcardService Instanzen###
 start "" cmd /k dotnet "%base_path%CreditcardService.dll" --urls="https://localhost:5020;http://localhost:5025"
 start "" cmd /k dotnet "%base_path%CreditcardService.dll" --urls="https://localhost:5021;http://localhost:5026"
+
+REM ###Starten zentraler LoggingService
+start "" cmd /k dotnet "%base_path%LoggerService.dll" --urls="https://localhost:5010;http://localhost:5015"
