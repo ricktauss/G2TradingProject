@@ -23,7 +23,10 @@ public class ProductManagementService
     public async Task<string> PostNewProduct(Product product, string key)
     {
 
-        var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7081/api/ServiceKeyValue/{key}");
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7081/api/ServiceKeyValue/");
+        request.Headers.Add("key", key);
+
+
         var response = await _httpclient.SendAsync(request);
 
         if (response.IsSuccessStatusCode)

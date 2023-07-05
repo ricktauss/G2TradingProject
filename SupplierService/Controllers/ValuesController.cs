@@ -19,12 +19,12 @@ namespace SupplierService.Controllers
         }
 
 
-        [HttpPost("{key}")]
+        [HttpPost]
 
-        public async Task<ActionResult<string>> PostProduct(Product product, string key)
+        public async Task<ActionResult<string>> PostProduct(Product product)
         {
 
-          return await _productManagementservice.PostNewProduct(product, key);
+          return await _productManagementservice.PostNewProduct(product, product.privateKey);
           
         }
 
