@@ -1,6 +1,6 @@
-﻿using IEGEasyCreditcardService.Models;
+﻿using CreditcardService.Models;
 
-namespace IEGEasyCreditcardService.Services
+namespace CreditcardService.Services
 {
     public class CreditcardValidator : ICreditcardValidator
     {

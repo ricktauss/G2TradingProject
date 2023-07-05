@@ -2,7 +2,7 @@
 using CreditcardService.Models;
 using System.Net.Http.Headers;
 
-namespace IEGEasyCreditcardService.Services
+namespace CreditcardService.Services
 {
     public class CustomLoggerService : ICustomLogger
     {
