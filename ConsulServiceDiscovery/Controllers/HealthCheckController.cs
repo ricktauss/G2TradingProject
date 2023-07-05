@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CreditcardService.Controllers
+namespace ConsulServiceDiscovery.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class HealthCheckController : ControllerBase

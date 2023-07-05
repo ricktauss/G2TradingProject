@@ -26,7 +26,7 @@ namespace ConsulServiceDiscovery.Controllers
                 return NotFound($"Service for service tag: \"{serviceTag}\" not found in service registry");
             }
 
-            return Ok(url);
+            return Ok(url.AbsoluteUri);
         }
     }
 }

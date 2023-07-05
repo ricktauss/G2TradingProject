@@ -1,1 +1,0 @@
-start "" cmd /k dotnet run --urls="https://localhost:5020;http://localhost:5025"
