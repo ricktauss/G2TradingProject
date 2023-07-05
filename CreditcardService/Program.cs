@@ -2,10 +2,11 @@
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using CorrelationId.HttpClient;
-using IEGEasyCreditcardService.Services;
+using CreditcardService.Services;
+using CreditcardService.Services;
 using System.Reflection;
 
-namespace IEGEasyCreditcardService
+namespace CreditcardService
 {
     public class Program
     {
@@ -26,17 +27,17 @@ namespace IEGEasyCreditcardService
             });
 
             builder.Services.AddScoped<ICreditcardValidator, CreditcardValidator>();
-            builder.Services.AddSingleton<LoadBalancerService>();
+            builder.Services.AddSingleton<IServiceDiscovery, ServiceDiscovery>();
             builder.Services.AddSingleton<ICustomLogger, CustomLoggerService>();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-           if (app.Environment.IsDevelopment())
-            {
+           //if (app.Environment.IsDevelopment())
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            //}
 
             app.UseHttpsRedirection();
 

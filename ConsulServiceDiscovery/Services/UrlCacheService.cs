@@ -22,7 +22,16 @@ namespace ConsulServiceDiscovery.Services
 
         private void initializeHttpClient(HttpClient _httpClient, IConfiguration configuration)
         {
-            _consulServerUrl = new Uri(configuration.GetValue<string>("ServiceDiscovery:Url"));
+            string consulServerUrlAsString = Environment.GetEnvironmentVariable("CONSUL_SERVER_URL");
+            if (string.IsNullOrEmpty(consulServerUrlAsString))
+            {
+                throw new InvalidOperationException($"CONSUL_SERVER_URL environment variable is not defined: '{consulServerUrlAsString}'");
+            }
+
+            if (!Uri.TryCreate(consulServerUrlAsString, UriKind.Absolute, out _consulServerUrl))
+            {
+                throw new InvalidOperationException($"CONSUL_SERVER_URL environment variable is not a valid URL: '{consulServerUrlAsString}'");
+            }
 
             _httpClient.BaseAddress = _consulServerUrl;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
