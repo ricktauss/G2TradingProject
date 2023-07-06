@@ -1,4 +1,5 @@
 ﻿using Consul;
+using ConsulKeyValueService.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -33,7 +34,7 @@ namespace ConsulKeyValueService.Services
                     return new ServiceResult<string>
                     {
                         Success = false,
-                        ErrorMessage = "Key not found in Consul!"
+                        ErrorMessage = "Key not found in Consul! Please contact administrator!"
                     };
             }
 

@@ -1,25 +1,17 @@
-using LocalDatastore.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using SupplierService.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddHttpClient();
-builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ProductContext>(opt =>
-    opt.UseInMemoryDatabase("Product"));
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<ProductManagementService>(); 
+builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-});
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
