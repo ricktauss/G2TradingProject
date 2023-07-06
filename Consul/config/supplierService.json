@@ -1,0 +1,16 @@
+{
+	"service": {
+		"name": "supplierService",
+		"port": 5055,
+		"tags": [
+			"SupplierService"
+		],
+		"check": {
+            "id": "HealthCheckSupplierService",
+            "name": "HTTP API on port 5055",
+            "http": "http://localhost:5055/api/HealthCheck",
+            "interval": "10s",
+            "timeout": "5s"
+        }
+	}
+}

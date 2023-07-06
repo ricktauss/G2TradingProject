@@ -3,6 +3,7 @@ set "base_path=%~dp0bin\Debug\net7.0\"
 
 REM ###Deklaration von Environment Variablen die in Services verwendet werden
 set "CONSUL_SERVER_URL=http://localhost:8500"
+set "ASPNETCORE_ENVIRONMENT=Development"
 
 
 REM ###Starten von ConsulServiceDiscovery CreditCardService-Sidecar###
@@ -21,4 +22,13 @@ start "" cmd /k dotnet "%base_path%ProductService.dll" --urls="https://localhost
 
 REM ###Starten ProductServiceFTP
 start "" cmd /k dotnet "%base_path%ProductServiceFTP.dll" --urls="https://localhost:5031;http://localhost:5036"
+
+REM ###Starten MeiShopService
+start "" cmd /k dotnet "%base_path%MeiShop.dll" --urls="https://localhost:5040;http://localhost:5045"
+
+REM ###Starten SupplierService
+start "" cmd /k dotnet "%base_path%SupplierService.dll" --urls="https://localhost:5050;http://localhost:5055"
+
+REM ###Starten ConsulKeyValueService
+start "" cmd /k dotnet "%base_path%ConsulKeyValueService.dll" --urls="https://localhost:5060;http://localhost:5065"
 

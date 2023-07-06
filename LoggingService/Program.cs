@@ -26,6 +26,7 @@ namespace LoggerService
 
                 // Add services to the container.
                 builder.Services.AddSingleton<ILoggingService, LoggingService>();
+                builder.Services.AddSingleton<ICorrelationIdGenerator, CorrelationIdGenerator>();
 
                 builder.Services.AddControllers();
                 builder.Services.AddEndpointsApiExplorer();
