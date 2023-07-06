@@ -1,0 +1,16 @@
+{
+	"service": {
+		"name": "LocalDatastore",
+		"port": 5075,
+		"tags": [
+			"LocalDatastore"
+		],
+		"check": {
+            "id": "HealthCheckLocalDatastore",
+            "name": "HTTP API on port 5075",
+            "http": "http://localhost:5075/api/HealthCheck",
+            "interval": "10s",
+            "timeout": "5s"
+        }
+	}
+}

@@ -16,7 +16,8 @@ namespace ConsulKeyValueService.Services
 
         public KeyValueService(IConfiguration configuration)
         {
-            _consulServerUrl = new Uri(configuration.GetValue<string>("ServiceDiscovery:Url"));
+            // _consulServerUrl = new Uri(configuration.GetValue<string>("ServiceDiscovery:Url"));
+            _consulServerUrl =  new Uri(Environment.GetEnvironmentVariable("CONSUL_SERVER_URL"));
             _consulClient = new ConsulClient(c => c.Address = _consulServerUrl);
 
         }

@@ -22,8 +22,8 @@ public class ProductManagementService
 
     public async Task<HttpResponseMessage> PostNewProduct(Product product, string key)
     {
-
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7081/api/ServiceKeyValue/");
+        var url = Environment.GetEnvironmentVariable("ConsulKeyValueService_URL");
+        var request = new HttpRequestMessage(HttpMethod.Get, url+"/api/ServiceKeyValue/");
         request.Headers.Add("key", key);
 
       
@@ -31,7 +31,8 @@ public class ProductManagementService
 
         if (response.IsSuccessStatusCode)
         {
-            request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7113/api/Products/");
+            url = Environment.GetEnvironmentVariable("LocalDatastore_URL");
+            request = new HttpRequestMessage(HttpMethod.Post, url + "/api/Products/");
             request.Headers.Add("secret", await response.Content.ReadAsStringAsync());
             var productJson = JsonConvert.SerializeObject(product);
             request.Content = new StringContent(productJson, Encoding.UTF8, "application/json");

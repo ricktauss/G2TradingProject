@@ -3,6 +3,11 @@ set "base_path=%~dp0bin\Debug\net7.0\"
 
 REM ###Deklaration von Environment Variablen die in Services verwendet werden
 set "CONSUL_SERVER_URL=http://localhost:8500"
+set "ConsulKeyValueService_URL=https://localhost:5064"
+set "SupplierService_URL=https://localhost:5050"
+set "ProductService_URL=https://localhost:5030"
+set "ProductServiceFTP_URL=https://localhost:5031"
+set "LocalDatastore_URL=https://localhost:5070"
 set "ASPNETCORE_ENVIRONMENT=Development"
 
 
@@ -30,5 +35,7 @@ REM ###Starten SupplierService
 start "" cmd /k dotnet "%base_path%SupplierService.dll" --urls="https://localhost:5050;http://localhost:5055"
 
 REM ###Starten ConsulKeyValueService
-start "" cmd /k dotnet "%base_path%ConsulKeyValueService.dll" --urls="https://localhost:5060;http://localhost:5065"
+start "" cmd /k dotnet "%base_path%ConsulKeyValueService.dll" --urls="https://localhost:5064;http://localhost:5065"
 
+REM ###Starten LocalDatastore
+start "" cmd /k dotnet "%base_path%LocalDatastore.dll" --urls="https://localhost:5070;http://localhost:5075"

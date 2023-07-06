@@ -39,7 +39,7 @@ namespace ProductServiceFTP.Controllers
 
             string content = ";" + product.description;
 
-            await System.IO.File.AppendAllTextAsync(@"../ProductServiceFTP/Products.csv",content);
+            await System.IO.File.AppendAllTextAsync("Products.csv",content);
 
 
             return Ok(product);
