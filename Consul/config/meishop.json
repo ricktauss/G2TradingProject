@@ -1,16 +1,14 @@
 {
 	"service": {
 		"name": "meishop",
-		"port": 5030,
+		"port": 5045,
 		"tags": [
-			"MeiShop",
-			"Product",
-			"Payment"
+			"MeiShop"
 		],
 		"check": {
             "id": "HealthCheckMeiShopService",
-            "name": "HTTP API on port 5030",
-            "http": "http://localhost:5030/api/HealthCheck",
+            "name": "HTTP API on port 5045",
+            "http": "http://localhost:5045/api/HealthCheck",
             "interval": "10s",
             "timeout": "5s"
         }
