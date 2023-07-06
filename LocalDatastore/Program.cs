@@ -1,4 +1,5 @@
 using LocalDatastore.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ProductContext>(opt =>

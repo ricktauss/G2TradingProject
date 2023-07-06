@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using LocalDatastore.Models;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Net.Http;
 
 namespace LocalDatastore.Controllers
 {
@@ -16,12 +18,13 @@ namespace LocalDatastore.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductContext _context;
-        private static readonly HttpClient client = new HttpClient();
+        private readonly HttpClient _httpclient;
 
 
-        public ProductsController(ProductContext context)
+        public ProductsController(ProductContext context, IHttpClientFactory httpClientFactory)
         {
             _context = context;
+            _httpclient = httpClientFactory.CreateClient();
         }
 
         // GET: api/Products
@@ -87,25 +90,51 @@ namespace LocalDatastore.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(Product product, [FromHeader(Name = "secret")] string secret)
         {
           if (_context.TodoItems == null)
           {
               return Problem("Entity set 'ProductContext.TodoItems'  is null.");
           }
-            _context.TodoItems.Add(product);
-            await _context.SaveChangesAsync();
 
 
-            //Webhook: ProductServiceFTP has subscribed
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7081/api/ServiceKeyValue/");
+            request.Headers.Add("key", "CreateProductKey");
+            var response = await _httpclient.SendAsync(request);
 
-            var json = JsonConvert.SerializeObject(product);
-            var content = new StringContent(json,Encoding.UTF8,"application/json");
+            if (response.IsSuccessStatusCode)
+            {
 
-            // Send the post request to the webhook URL - fire and forget :)
-            var response =  client.PostAsync("https://localhost:7050/api/ProductsfFTP", content);
+                if (await response.Content.ReadAsStringAsync() == secret) //check if secret is ok
+                {
+                    //Save product in DB
+                    _context.TodoItems.Add(product);
+                    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+                    //Webhook: ProductServiceFTP has subscribed - Product will be transmitted to the FTP Server
+                    var json = JsonConvert.SerializeObject(product);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    // Send the post request to the webhook URL - fire and forget :)
+                    response = await _httpclient.PostAsync("https://localhost:7050/api/ProductsfFTP", content);
+
+                    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status403Forbidden, "User not authorized!");
+                }
+
+
+            }
+            else
+            {
+                return BadRequest(response);
+            }
+
+          
+           
         }
 
         // DELETE: api/Products/5
