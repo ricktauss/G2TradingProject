@@ -2,7 +2,7 @@
     "services": [
         {
             "id": "service1",
-            "name": "g4.creditcardservice.local",
+            "name": "creditcardservice",
             "Address": "https://localhost",
             "port": 5020,
             "tags": [
@@ -21,7 +21,7 @@
         },
         {
             "id": "service2",
-            "name": "g4.creditcardservice.local",
+            "name": "creditcardservice",
             "Address": "https://localhost",
             "port": 5021,
             "tags": [

@@ -15,3 +15,10 @@ start "" cmd /k dotnet "%base_path%CreditcardService.dll" --urls="https://localh
 
 REM ###Starten zentraler LoggingService
 start "" cmd /k dotnet "%base_path%LoggerService.dll" --urls="https://localhost:5010;http://localhost:5015"
+
+REM ###Starten ProductService
+start "" cmd /k dotnet "%base_path%ProductService.dll" --urls="https://localhost:5030;http://localhost:5035"
+
+REM ###Starten ProductServiceFTP
+start "" cmd /k dotnet "%base_path%ProductServiceFTP.dll" --urls="https://localhost:5031;http://localhost:5036"
+
