@@ -1,0 +1,16 @@
+{
+    "service": {
+        "name": "productserviceFTP",
+		"port": 5031,
+        "tags": [
+            "productserviceFTP"
+        ],
+        "check": {
+            "id": "HealthCheckProductServiceFTP",
+            "name": "HTTP API on port 5031",
+            "http": "http://localhost:5031/api/HealthCheck",
+            "interval": "10s",
+            "timeout": "5s"
+        }
+    }
+}
