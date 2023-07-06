@@ -20,42 +20,31 @@ public class ProductManagementService
     }
 
 
-    public async Task<string> PostNewProduct(Product product, string key)
+    public async Task<HttpResponseMessage> PostNewProduct(Product product, string key)
     {
 
         var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7081/api/ServiceKeyValue/");
         request.Headers.Add("key", key);
 
-
+      
         var response = await _httpclient.SendAsync(request);
 
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadAsStringAsync();
+            request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7113/api/Products/");
+            request.Headers.Add("secret", await response.Content.ReadAsStringAsync());
+            var productJson = JsonConvert.SerializeObject(product);
+            request.Content = new StringContent(productJson, Encoding.UTF8, "application/json");
+            response = await _httpclient.SendAsync(request);
+
+            return response;
+
         }
-        else
-        {
-            return await response.Content.ReadAsStringAsync();
+        else 
+        { 
+            return response;
         }
 
-
-/*
-        var json = JsonConvert.SerializeObject(product);
-        request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7050/api/ProductsfFTP");
-        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-
-        response = await client.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
-        {
-            return await response.Content.ReadAsStringAsync();
-        }
-        else
-        {
-            return null;
-        }
-*/
 
     }
 

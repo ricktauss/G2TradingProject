@@ -90,7 +90,7 @@ namespace LocalDatastore.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product, [FromHeader(Name = "secret")] string secret)
+        public async Task<ActionResult<string>> PostProduct(Product product, [FromHeader(Name = "secret")] string secret)
         {
           if (_context.TodoItems == null)
           {
@@ -118,7 +118,9 @@ namespace LocalDatastore.Controllers
                     // Send the post request to the webhook URL - fire and forget :)
                     response = await _httpclient.PostAsync("https://localhost:7050/api/ProductsfFTP", content);
 
-                    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+                    CreatedAtAction("GetProduct", new { id = product.Id }, product);
+
+                    return Ok(product.description + " has been successfully added to database!");
 
                 }
                 else
