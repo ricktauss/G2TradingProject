@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Consul;
 using ConsulKeyValueService.Services;
 using Newtonsoft.Json.Linq;
+using ConsulKeyValueService.Model;
 
 namespace ConsulKeyValueService.Controllers
 {
@@ -20,8 +21,8 @@ namespace ConsulKeyValueService.Controllers
         }
 
 
-        [HttpGet("{key}")]
-        public async Task<ActionResult> GetKeyValue(string key)
+        [HttpGet]
+        public async Task<ActionResult> GetKeyValue([FromHeader(Name = "key")] string key)
         {
             ServiceResult<string> serviceResult = await _keyValueService.GetKeyValue(key);
 
@@ -31,12 +32,12 @@ namespace ConsulKeyValueService.Controllers
         }
 
 
-        [HttpPost("{key}")]
+        [HttpPost]
 
-        public async Task<ActionResult> PostKeyValue(string key, [FromBody] string value)
+        public async Task<ActionResult> PostKeyValue(SecretKeyValueModel secretKeyValueModel)
         {
 
-           ServiceResult<string> serviceResult = await _keyValueService.SetKeyValue(key, value);
+           ServiceResult<string> serviceResult = await _keyValueService.SetKeyValue(secretKeyValueModel.key, secretKeyValueModel.value);
 
             if (serviceResult.Success)
                 return Ok("Key has beed added successfully to Consul");

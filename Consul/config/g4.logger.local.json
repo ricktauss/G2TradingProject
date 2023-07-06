@@ -1,0 +1,16 @@
+{
+    "service": {
+        "name": "g4.logger.local",
+		"port": 5015,
+        "tags": [
+            "Logger"
+        ],
+        "check": {
+            "id": "HealthCheckLoggerService",
+            "name": "HTTP API on port 5015",
+            "http": "http://localhost:5015/api/HealthCheck",
+            "interval": "10s",
+            "timeout": "5s"
+        }
+    }
+}

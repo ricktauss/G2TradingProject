@@ -1,0 +1,20 @@
+{
+    "services": [
+        {
+            "name": "g4.creditcardservice-servicediscovery.local",
+            "Address": "https://localhost",
+            "port": 5029,
+            "tags": [
+                "ServiceDiscovery"
+            ],
+            "check": [
+                {
+                    "id": "HealthCheck CreditCardService - ServiceDiscovery",
+                    "name": "HTTPS API on port 5029",
+                    "http": "https://localhost:5029/api/HealthCheck",
+                    "interval": "10s",
+                    "timeout": "5s"
+                }
+            ]
+        }]
+}

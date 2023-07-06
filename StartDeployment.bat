@@ -21,3 +21,4 @@ start "" cmd /k dotnet "%base_path%ProductService.dll" --urls="https://localhost
 
 REM ###Starten ProductServiceFTP
 start "" cmd /k dotnet "%base_path%ProductServiceFTP.dll" --urls="https://localhost:5031;http://localhost:5036"
+
