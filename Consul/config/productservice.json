@@ -1,14 +1,14 @@
 {
     "service": {
         "name": "productservice",
-		"port": 5030,
+		"port": 5035,
         "tags": [
             "productservice"
         ],
         "check": {
             "id": "HealthCheckProductService",
-            "name": "HTTP API on port 5030",
-            "http": "http://localhost:5030/api/HealthCheck",
+            "name": "HTTP API on port 5035",
+            "http": "http://localhost:5035/api/HealthCheck",
             "interval": "10s",
             "timeout": "5s"
         }
