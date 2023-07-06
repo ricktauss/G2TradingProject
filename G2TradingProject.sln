@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsulKeyValueService", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncQueue", "AsyncQueue\AsyncQueue.csproj", "{12C648F6-A198-4148-AF07-AF36C5682CF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplierService", "SupplierService\SupplierService.csproj", "{D8FACD78-63A0-4DD2-B846-090AA2B36961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{12C648F6-A198-4148-AF07-AF36C5682CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C648F6-A198-4148-AF07-AF36C5682CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C648F6-A198-4148-AF07-AF36C5682CF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8FACD78-63A0-4DD2-B846-090AA2B36961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8FACD78-63A0-4DD2-B846-090AA2B36961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8FACD78-63A0-4DD2-B846-090AA2B36961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8FACD78-63A0-4DD2-B846-090AA2B36961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

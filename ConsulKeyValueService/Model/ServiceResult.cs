@@ -1,6 +1,6 @@
-﻿namespace ConsulKeyValueService.Services
+﻿namespace ConsulKeyValueService.Model
 {
-    public class ServiceResult <T>
+    public class ServiceResult<T>
     {
         public bool Success { get; set; }
         public T Data { get; set; }
