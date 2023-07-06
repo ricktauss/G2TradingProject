@@ -1,6 +1,6 @@
 {
     "service": {
-        "name": "g4.logger.local",
+        "name": "logger",
 		"port": 5015,
         "tags": [
             "Logger"

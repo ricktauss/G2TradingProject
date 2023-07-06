@@ -1,18 +1,16 @@
 {
-	"service": {
-		"name": "g4.meishop.local",
+    "service": {
+        "name": "productservice",
 		"port": 5030,
-		"tags": [
-			"MeiShop",
-			"Product",
-			"Payment"
-		],
-		"check": {
-            "id": "HealthCheckMeiShopService",
+        "tags": [
+            "productservice"
+        ],
+        "check": {
+            "id": "HealthCheckProductService",
             "name": "HTTP API on port 5030",
             "http": "http://localhost:5030/api/HealthCheck",
             "interval": "10s",
             "timeout": "5s"
         }
-	}
+    }
 }
