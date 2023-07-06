@@ -1,0 +1,16 @@
+{
+	"service": {
+		"name": "consulKeyValueService",
+		"port": 5065,
+		"tags": [
+			"ConsulKeyValueService"
+		],
+		"check": {
+            "id": "HealthCheckConsulKeyValueService",
+            "name": "HTTP API on port 5065",
+            "http": "http://localhost:5065/api/HealthCheck",
+            "interval": "10s",
+            "timeout": "5s"
+        }
+	}
+}
