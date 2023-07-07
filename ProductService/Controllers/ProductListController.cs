@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductService.Models;
+using System;
 using System.Collections;
 using System.Net.Http.Headers;
 
@@ -18,7 +19,8 @@ namespace ProductService.Controllers
         {
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7113/'");
+            var url = Environment.GetEnvironmentVariable("LocalDatastore_URL");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -36,20 +38,6 @@ namespace ProductService.Controllers
 
             return null;
 
-            /*
- Product product = new Product();
-
- product.Description = "Iphone";
-
- Product product2 = new Product();
-
- product2.Description = "Sony";
-
- List<Product> products = new List<Product>();
- products.Add(product);
- products.Add(product2);
-
-     */
 
         }
     }

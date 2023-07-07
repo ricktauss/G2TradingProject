@@ -10,6 +10,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Net.Http;
+using System.Security.Policy;
 
 namespace LocalDatastore.Controllers
 {
@@ -95,10 +96,11 @@ namespace LocalDatastore.Controllers
           if (_context.TodoItems == null)
           {
               return Problem("Entity set 'ProductContext.TodoItems'  is null.");
-          }
+            }
 
+            var url = Environment.GetEnvironmentVariable("ConsulKeyValueService_URL");
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7081/api/ServiceKeyValue/");
+            var request = new HttpRequestMessage(HttpMethod.Get, url + "/api/ServiceKeyValue/");
             request.Headers.Add("key", "CreateProductKey");
             var response = await _httpclient.SendAsync(request);
 
@@ -116,7 +118,8 @@ namespace LocalDatastore.Controllers
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     // Send the post request to the webhook URL - fire and forget :)
-                    response = await _httpclient.PostAsync("https://localhost:7050/api/ProductsfFTP", content);
+                    url = Environment.GetEnvironmentVariable("ProductServiceFTP_URL");
+                    response = await _httpclient.PostAsync(url + "/api/ProductsfFTP", content);
 
                     CreatedAtAction("GetProduct", new { id = product.Id }, product);
 

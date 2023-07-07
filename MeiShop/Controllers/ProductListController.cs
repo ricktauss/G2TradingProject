@@ -16,7 +16,9 @@ namespace MeiShop.Controllers
 
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7034/'");
+       
+            var url = Environment.GetEnvironmentVariable("ProductService_URL");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
